@@ -1,0 +1,44 @@
+###
+#Patrick Halter, 4/15/2017, 4/29/2018
+#This is the configuration file that goes with my 2D cartesian elliptic PDE solver.
+#PHYS 640, Project 2
+###
+
+
+#Comments are delineated by #
+#Values to actually be read into the computer are bracketed by colons, like so
+# :value:
+
+#Bounds of the problem, from (min_x,min_y) to (max_x,max_y)
+
+elem_type	:rect: #rect for rectangular (square), tri for triangles
+struct		:True: #True or False. True means structured, which means dx and dy will be used. False means unstructured, which means the data file (path in file) will be used
+
+min_x 		:0: #minimum x value
+min_y	 	:0: #minimum y value
+max_x 		:4: #maximum x value
+max_y	 	:4: #maximum y value
+dx		:1: #step in x
+dy		:1: #step in y
+k		:25:
+f		:0: #right hand side. 0 corresponds to Laplace's equation
+T0		:100: #used in BC. See project for where; explanation is outside scope
+
+#note we could assume a more general form by inserting some function a_ij
+#as multipliers of the derivatives. But we aren't. all a_ij=1, because that's
+#the problem spec and I don't want to get even more complex
+
+#boundary values are in the form groups of three arguments, in parentheses, like so:
+#position, value, boundary_type
+#  The position argument specifies the minimum value for this boundary condition to apply
+#  The value is the value at the boundary
+#  The boundary_type can be either 'dirichlet' or 'neumann' and specify what kind of boundary condition is being given
+#Boundaries can take multiple sets of three arguments, all in one, like so:
+#  (POS1, VAL1, TYPE2, POS2, VAL2, TYPE2) and so forth
+
+TOP 	:min_x, boundfun, dirichlet: #boundfun has special handling
+BOTTOM	:min_x, 0, dirichlet:
+LEFT 	:min_y, 0, neumann:
+RIGHT 	:min_y, 0, dirichlet:
+
+
